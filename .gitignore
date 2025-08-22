@@ -41,7 +41,6 @@ Thumbs.db
 /.rvmrc
 
 # rbenv
-/.ruby-version
 /.ruby-gemset
 
 # IDE
