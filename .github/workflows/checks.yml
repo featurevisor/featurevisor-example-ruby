@@ -28,5 +28,5 @@ jobs:
       - name: Install
         run: bundle install
 
-      - name: Run
-        run: rake run
+      - name: Run the application
+        run: bundle exec ruby app.rb
