@@ -21,11 +21,23 @@ class HelloWorldServer
     # Fetch the datafile
     response = Net::HTTP.get(URI(datafile_url))
     datafile_content = JSON.parse(response)
+    symbolized_datafile = symbolize_keys(datafile_content) # @TODO: this shouldn't be required
 
     # Create Featurevisor instance
     @featurevisor = Featurevisor.create_instance(
-      datafile: datafile_content,
+      datafile: symbolized_datafile,
     )
+  end
+
+  def symbolize_keys(obj)
+    case obj
+    when Hash
+      obj.transform_keys(&:to_sym).transform_values { |v| symbolize_keys(v) }
+    when Array
+      obj.map { |v| symbolize_keys(v) }
+    else
+      obj
+    end
   end
 
   def start
