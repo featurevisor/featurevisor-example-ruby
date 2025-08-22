@@ -4,11 +4,28 @@
 # This is a basic example to get you started with Ruby web development
 
 require 'socket'
+require 'featurevisor'
+require 'net/http'
+require 'json'
 
 class HelloWorldServer
   def initialize(port = 3000)
     @port = port
     @server = nil
+
+    ##
+    # Initialize Featurevisor
+    #
+    datafile_url = "https://featurevisor-example-cloudflare.pages.dev/production/featurevisor-tag-all.json"
+
+    # Fetch the datafile
+    response = Net::HTTP.get(URI(datafile_url))
+    datafile_content = JSON.parse(response)
+
+    # Create Featurevisor instance
+    @featurevisor = Featurevisor.create_instance(
+      datafile: datafile_content,
+    )
   end
 
   def start
@@ -59,7 +76,10 @@ class HelloWorldServer
 
   def generate_response(method, path)
     if path == '/' && method == 'GET'
-      body = "Hello World"
+      # Get the feature flag value
+      feature_flag_value = @featurevisor.is_enabled("my_feature")
+
+      body = "Hello World. Feature flag value is: #{feature_flag_value}"
       status = '200 OK'
       content_type = "text/plain"
     else
