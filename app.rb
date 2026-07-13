@@ -12,7 +12,7 @@ response = Net::HTTP.get(URI(datafile_url))
 datafile_content = JSON.parse(response, symbolize_names: true)
 
 # Create Featurevisor instance
-f = Featurevisor.create_instance(
+f = Featurevisor.create_featurevisor(
   datafile: datafile_content,
 )
 

@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '>= 2.7.0'
+ruby '>= 3.0.0'
 
 # Add your gems here
 gem 'rake', '~> 13.0'
-gem 'featurevisor', '~> 0.3.0'
+gem 'featurevisor', '~> 1.0'
 
 group :development do
   gem 'rubocop', '~> 1.50'
