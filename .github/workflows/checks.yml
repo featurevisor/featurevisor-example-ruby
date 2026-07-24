@@ -3,30 +3,34 @@ name: Checks
 on:
   push:
     branches:
-      - "**"
+      - main
   pull_request:
-    types:
-      - opened
-      - synchronize # when a PR is updated
-      - reopened # when a PR is reopened
-      - ready_for_review # when a PR is ready for review
-      - review_requested # when a PR is requested for review
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  ci:
+  checks:
+    name: Ruby 4.0
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - name: Check out
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v7
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: "4.0"
           bundler-cache: true
 
-      - name: Install
-        run: bundle install
+      - name: Check syntax
+        run: bundle exec ruby -c app.rb
 
-      - name: Run the application
+      - name: Run application
         run: bundle exec ruby app.rb
