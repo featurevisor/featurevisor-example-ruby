@@ -3,8 +3,8 @@ GEM
   specs:
     ast (2.4.3)
     benchmark (0.5.0)
-    featurevisor (1.0.0)
-      benchmark
+    featurevisor (2.0.0)
+      benchmark (>= 0, < 1)
     json (2.13.2)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
@@ -41,7 +41,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  featurevisor (~> 1.0)
+  featurevisor (~> 2.0)
   rake (~> 13.0)
   rubocop (~> 1.50)
 
