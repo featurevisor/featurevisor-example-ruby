@@ -32,5 +32,8 @@ jobs:
       - name: Check syntax
         run: bundle exec ruby -c app.rb
 
+      - name: Lint
+        run: bundle exec rubocop --cache false
+
       - name: Run application
         run: bundle exec ruby app.rb
